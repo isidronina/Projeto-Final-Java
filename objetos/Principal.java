@@ -28,8 +28,7 @@ public class Principal {
             System.out.println("1 - Pesquisar livro por ISBN");
             System.out.println("2 - Atualizar livro por ISBN");
             System.out.println("3 - Remover livro por ISBN");
-            System.out.println("4 - Ordenar livros por ISBN");
-            System.out.println("5 - Exibir livros");
+            System.out.println("4 - Exibir livros");
             System.out.println("0 - Sair");
             System.out.print("Escolha uma opção: ");
 
@@ -88,13 +87,9 @@ public class Principal {
                     break;
 
                 case 4:
-                    Array.mergeSort(0, livro.getControle(), livro.getLista());
+                    Array.mergeSortTitulo(0, livro.getControle(), livro.getLista());
 
-                    System.out.println("Livros ordenados por ISBN!");
-                    livro.exibir();
-                    break;
-
-                case 5:
+                    System.out.println("Livros ordenados por título!");
                     livro.exibir();
                     break;
 

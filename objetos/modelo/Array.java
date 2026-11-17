@@ -93,6 +93,42 @@ public class Array {
         }
     }
 
+    public static void mergeSortTitulo(int inicio, int tamanho, Livro[] v) {
+        if (inicio < tamanho - 1) {
+            int meio = (inicio + tamanho) / 2;
+            mergeSortTitulo(inicio, meio, v);
+            mergeSortTitulo(meio, tamanho, v);
+            intercalarTitulo(inicio, meio, tamanho, v);
+        }
+    }
+
+    private static void intercalarTitulo(int inicio, int meio, int tamanho, Livro[] v) {
+        int i = inicio;
+        int j = meio;
+        int k = 0;
+        Livro[] auxiliar = new Livro[tamanho - inicio];
+
+        while (i < meio && j < tamanho) {
+            if (v[i].getTitulo().compareToIgnoreCase(v[j].getTitulo()) <= 0) {
+                auxiliar[k++] = v[i++];
+            } else {
+                auxiliar[k++] = v[j++];
+            }
+        }
+
+        while (i < meio) {
+            auxiliar[k++] = v[i++];
+        }
+
+        while (j < tamanho) {
+            auxiliar[k++] = v[j++];
+        }
+
+        for (i = inicio; i < tamanho; i++) {
+            v[i] = auxiliar[i - inicio];
+        }
+    }
+
     public int getControle() {
         return controle;
     }

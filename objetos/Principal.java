@@ -87,6 +87,8 @@ public class Principal {
                     break;
 
                 case 4:
+                    livroCopia = System.arraycopy(livro, isbnPesquisa, 0, isbnAtualizar, isbnRemover);
+
                     Array.mergeSortTitulo(0, livro.getControle(), livro.getLista());
 
                     System.out.println("Livros ordenados por título!");

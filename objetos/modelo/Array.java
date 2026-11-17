@@ -1,6 +1,6 @@
 package modelo;
 public class Array {
-    private Livro[] lista= new Livro[4];
+    private Livro[] lista= new Livro[10];
     private int controle=0; // Controla a quantidade do Array
 
     public void inserir(Livro livro){ 
@@ -11,7 +11,7 @@ public class Array {
     }
 
     private Livro[] alocarNovoArray(){
-        Livro [] novo =new Livro[lista.length+4];
+        Livro [] novo = new Livro[lista.length + lista.length / 2];
         System.arraycopy(lista, 0, novo, 0, lista.length);
         return novo; 
     }

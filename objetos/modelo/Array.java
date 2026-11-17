@@ -97,7 +97,7 @@ public class Array {
         return controle;
     }
 
-    public Produto[] getLista() {
+    public Livro[] getLista() {
     return lista;
     }
 }

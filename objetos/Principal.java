@@ -1,6 +1,6 @@
 import java.util.Scanner;
 import modelo.Array;
-import modelo.Produto;
+import modelo.Livro;
 
 public class Principal {
     public static void main(String[] args) {
@@ -64,7 +64,10 @@ public class Principal {
                         System.out.print("Digite o novo ano: ");
                         String ano = entrada.nextLine();
 
-                        livro.atualizarPorIsbn(isbnAtualizar, autor, ano);
+                        System.out.print("Digite o novo titulo: ");
+                        String titulo = entrada.nextLine();
+
+                        livro.atualizarPorIsbn(isbnAtualizar, titulo, autor, ano);
                         System.out.println("Livro atualizado!");
 
                     } else {
@@ -73,11 +76,11 @@ public class Principal {
                     break;
 
                 case 3:
-                    System.out.print("Digite o ID do livro: ");
-                    int idRemover = entrada.nextInt();
+                    System.out.print("Digite o ISBN do livro: ");
+                    int isbnRemover = entrada.nextInt();
 
-                    if (livro.pesquisarId(idRemover) != null) {
-                        livro.removerPorId(idRemover);
+                    if (livro.pesquisarIsbn(isbnRemover) != null) {
+                        livro.removerPorIsbn(isbnRemover);
                         System.out.println("Livro removido!");
                     } else {
                         System.out.println("Livro não encontrado!");
@@ -85,7 +88,7 @@ public class Principal {
                     break;
 
                 case 4:
-                    livro.mergeSort(0, livro.getControle(), livro.getLista());
+                    Array.mergeSort(0, livro.getControle(), livro.getLista());
 
                     System.out.println("Livros ordenados por ISBN!");
                     livro.exibir();

@@ -3,17 +3,49 @@ public class Array {
     private Livro[] lista= new Livro[10];
     private int controle=0; // Controla a quantidade do Array
 
-    public void inserir(Livro livro){ 
+    public boolean inserir(Livro livro){
+        if (livro == null || buscaBinariaRecursiva(livro.getIsbn()) != -1) {
+            return false;
+        }
         if (controle==lista.length) { 
             lista=alocarNovoArray();
         }
         lista[controle++]=livro;
+        mergeSort(0, controle, lista);
+        return true;
     }
 
     private Livro[] alocarNovoArray(){
         Livro [] novo = new Livro[lista.length + lista.length / 2];
         System.arraycopy(lista, 0, novo, 0, lista.length);
         return novo; 
+    }
+
+    public int buscaBinariaRecursiva(int isbn) {
+
+        return buscaBinaria(isbn, 0, controle - 1);
+    }
+
+    private int buscaBinaria(int isbn, int inicio, int fim) {
+
+        if (inicio > fim) {
+            return -1;
+        }
+
+        int meio = (inicio + fim) / 2;
+
+        if (lista[meio].getIsbn() == isbn) {
+            return meio;
+        }
+
+        if (isbn < lista[meio].getIsbn()) {
+
+            return buscaBinaria(isbn, inicio, meio - 1);
+
+        } else {
+
+            return buscaBinaria(isbn, meio + 1, fim);
+        }
     }
 
     public void exibir(){
@@ -23,37 +55,46 @@ public class Array {
         }
     }
 
-    public Livro pesquisarIsbn(int isbn){
-        for(int i=0; i < controle; i++){
-            if(isbn == lista[i].getIsbn()){
-                return lista[i];
-            }
+    public Livro pesquisarIsbn(int isbn) {
+        int posicao = buscaBinariaRecursiva(isbn);
+
+        if (posicao != -1) {
+            return lista[posicao];
         }
+
         return null;
     }
 
-    public void atualizarPorIsbn(int isbn, String titulo, String autor, String ano){
-        for(int i=0; i < controle; i++){
-            if(isbn == lista[i].getIsbn()){
-                lista[i].setTitulo(titulo);
-                lista[i].setAutor(autor);
-                lista[i].setAno(ano);
-                lista[i].setIsbn(isbn);
-            }
+    public boolean atualizarPorIsbn(int isbn, String titulo, String autor, String ano, int novoIsbn) {
+        int posicao = buscaBinariaRecursiva(isbn);
+        if (posicao == -1) {
+            return false;
         }
+
+        int posicaoNovoIsbn = buscaBinariaRecursiva(novoIsbn);
+        if (posicaoNovoIsbn != -1 && posicaoNovoIsbn != posicao) {
+            return false;
+        }
+
+        lista[posicao].setTitulo(titulo);
+        lista[posicao].setAutor(autor);
+        lista[posicao].setAno(ano);
+        lista[posicao].setIsbn(novoIsbn);
+        mergeSort(0, controle, lista);
+        return true;
     }
 
-    public void removerPorIsbn(int isbn){
-        for(int i=0; i <controle; i++){
-            if(isbn == lista[i].getIsbn()){
-                for(int j=i;j<controle-1;j++){
-                    lista[j]=lista[j+1];
-                }
-                controle--;
-                lista[controle]=null;
-                return ;
-            }
+    public boolean removerPorIsbn(int isbn) {
+        int posicao = buscaBinariaRecursiva(isbn);
+        if (posicao == -1) {
+            return false;
         }
+
+        for (int i = posicao; i < controle - 1; i++) {
+            lista[i] = lista[i + 1];
+        }
+        lista[--controle] = null;
+        return true;
     }
 
     public static void mergeSort(int inicio, int tamanho, Livro[] v) {

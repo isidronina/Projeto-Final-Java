@@ -29,16 +29,15 @@ public class Principal {
             System.out.println("2 - Atualizar livro por ISBN");
             System.out.println("3 - Remover livro por ISBN");
             System.out.println("4 - Exibir livros");
+            System.out.println("5 - Inserir livro");
             System.out.println("0 - Sair");
-            System.out.print("Escolha uma opção: ");
 
-            opcao = entrada.nextInt();
+            opcao = Leitura.lerInteiro(entrada, "Escolha uma opção: ");
 
             switch (opcao) {
 
                 case 1:
-                    System.out.print("Digite o ISBN do livro: ");
-                    int isbnPesquisa = entrada.nextInt();
+                    int isbnPesquisa = Leitura.lerIsbn(entrada, "Digite o ISBN do livro: ");
 
                     Livro encontrado = livro.pesquisarIsbn(isbnPesquisa);
 
@@ -50,36 +49,28 @@ public class Principal {
                     break;
 
                 case 2:
-                    System.out.print("Digite o ISBN do livro: ");
-                    int isbnAtualizar = entrada.nextInt();
+                    int isbnAtualizar = Leitura.lerIsbn(entrada, "Digite o ISBN do livro: ");
 
                     if (livro.pesquisarIsbn(isbnAtualizar) != null) {
+                        String autor = Leitura.lerTextoObrigatorio(entrada, "Digite o novo autor: ");
+                        String ano = Leitura.lerTextoObrigatorio(entrada, "Digite o novo ano: ");
+                        String titulo = Leitura.lerTextoObrigatorio(entrada, "Digite o novo título: ");
+                        int novoIsbn = Leitura.lerIsbn(entrada, "Digite o novo ISBN: ");
 
-                        entrada.nextLine();
-
-                        System.out.print("Digite o novo autor: ");
-                        String autor = entrada.nextLine();
-
-                        System.out.print("Digite o novo ano: ");
-                        String ano = entrada.nextLine();
-
-                        System.out.print("Digite o novo titulo: ");
-                        String titulo = entrada.nextLine();
-
-                        livro.atualizarPorIsbn(isbnAtualizar, titulo, autor, ano);
-                        System.out.println("Livro atualizado!");
-
+                        if (livro.atualizarPorIsbn(isbnAtualizar, titulo, autor, ano, novoIsbn)) {
+                            System.out.println("Livro atualizado!");
+                        } else {
+                            System.out.println("Não foi possível atualizar: o novo ISBN já está cadastrado.");
+                        }
                     } else {
                         System.out.println("Livro não encontrado!");
                     }
                     break;
 
                 case 3:
-                    System.out.print("Digite o ISBN do livro: ");
-                    int isbnRemover = entrada.nextInt();
+                    int isbnRemover = Leitura.lerIsbn(entrada, "Digite o ISBN do livro: ");
 
-                    if (livro.pesquisarIsbn(isbnRemover) != null) {
-                        livro.removerPorIsbn(isbnRemover);
+                    if (livro.removerPorIsbn(isbnRemover)) {
                         System.out.println("Livro removido!");
                     } else {
                         System.out.println("Livro não encontrado!");
@@ -87,12 +78,28 @@ public class Principal {
                     break;
 
                 case 4:
-                    livroCopia = System.arraycopy(livro, isbnPesquisa, 0, isbnAtualizar, isbnRemover);
+                    Array livroCopia = new Array();
+                    for (int i = 0; i < livro.getControle(); i++) {
+                        livroCopia.inserir(livro.getLista()[i]);
+                    }
 
-                    Array.mergeSortTitulo(0, livro.getControle(), livro.getLista());
+                    Array.mergeSortTitulo(0, livroCopia.getControle(), livroCopia.getLista());
 
                     System.out.println("Livros ordenados por título!");
-                    livro.exibir();
+                    livroCopia.exibir();
+                    break;
+
+                case 5:
+                    String titulo = Leitura.lerTextoObrigatorio(entrada, "Digite o título do livro: ");
+                    String autor = Leitura.lerTextoObrigatorio(entrada, "Digite o autor do livro: ");
+                    String ano = Leitura.lerTextoObrigatorio(entrada, "Digite o ano do livro: ");
+                    int isbn = Leitura.lerIsbn(entrada, "Digite o ISBN do livro: ");
+
+                    if (livro.inserir(new Livro(titulo, autor, ano, isbn))) {
+                        System.out.println("Livro inserido!");
+                    } else {
+                        System.out.println("Não foi possível inserir: o ISBN já está cadastrado.");
+                    }
                     break;
 
                 case 0:

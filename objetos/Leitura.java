@@ -1,3 +1,4 @@
+import java.time.Year;
 import java.util.Scanner;
 
 public class Leitura {
@@ -20,6 +21,17 @@ public class Leitura {
                 return isbn;
             }
             System.out.println("O ISBN deve ser um número positivo.");
+        }
+    }
+
+    public static String lerAno(Scanner entrada, String mensagem) {
+        int anoAtual = Year.now().getValue();
+        while (true) {
+            int ano = lerInteiro(entrada, mensagem);
+            if (ano >= 1450 && ano <= anoAtual) {
+                return Integer.toString(ano);
+            }
+            System.out.println("O ano deve estar entre 1450 e " + anoAtual + ".");
         }
     }
 

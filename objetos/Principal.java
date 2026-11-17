@@ -12,7 +12,7 @@ public class Principal {
         // Cadastro manual dos livros
         livro.inserir(new Livro("Dom Casmurro", "Machado de Assis", "1899", 18991));
         livro.inserir(new Livro("O Pequeno Príncipe", "Antoine de Saint-Exupéry", "1943", 19432));
-        livro.inserir(new Livro("O Senhor dos Rings", "J.R.R. Tolkien", "1954", 19543));
+        livro.inserir(new Livro("O Senhor dos Anéis", "J.R.R. Tolkien", "1954", 19543));
         livro.inserir(new Livro("Harry Potter e a Pedra Filosofal", "J.K. Rowling", "1997", 19974));
         livro.inserir(new Livro("1984", "George Orwell", "1949", 19495));
         livro.inserir(new Livro("O Hobbit", "J.R.R. Tolkien", "1937", 19376));
@@ -53,7 +53,7 @@ public class Principal {
 
                     if (livro.pesquisarIsbn(isbnAtualizar) != null) {
                         String autor = Leitura.lerTextoObrigatorio(entrada, "Digite o novo autor: ");
-                        String ano = Leitura.lerTextoObrigatorio(entrada, "Digite o novo ano: ");
+                        String ano = Leitura.lerAno(entrada, "Digite o novo ano: ");
                         String titulo = Leitura.lerTextoObrigatorio(entrada, "Digite o novo título: ");
                         int novoIsbn = Leitura.lerIsbn(entrada, "Digite o novo ISBN: ");
 
@@ -92,7 +92,7 @@ public class Principal {
                 case 5:
                     String titulo = Leitura.lerTextoObrigatorio(entrada, "Digite o título do livro: ");
                     String autor = Leitura.lerTextoObrigatorio(entrada, "Digite o autor do livro: ");
-                    String ano = Leitura.lerTextoObrigatorio(entrada, "Digite o ano do livro: ");
+                    String ano = Leitura.lerAno(entrada, "Digite o ano do livro: ");
                     int isbn = Leitura.lerIsbn(entrada, "Digite o ISBN do livro: ");
 
                     if (livro.inserir(new Livro(titulo, autor, ano, isbn))) {
